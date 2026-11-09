@@ -1,0 +1,656 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>KSI STUDIO</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap">
+<style>
+  /* Layout: columna editorial amplia, mucho aire; cabecera sobria, hero tipográfico, rejilla de 3 columnas con láminas de línea fina. */
+  :root {
+    --bg: #F9F9F9;
+    --ink: #1A1A1A;
+    --stone: #8C8C8C;
+    --accent: #2F6F62;
+    --accent-soft: #CFE3DA;
+    --line: #3A3A38;
+    --muted: #5F5F5B;
+    --bad: #B0392B;
+    --panel-bg: #EDF3EF;
+    --rule: #B9BDB8;
+    --focus: #1A1A1A;
+    --font: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --gutter: clamp(20px, 5vw, 72px);
+    color-scheme: light;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.8;
+    padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+    padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1280px; margin: 0 auto; }
+
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible { outline: 1px solid var(--focus); outline-offset: 6px; }
+
+  /* Header */
+  header { padding-block: clamp(28px, 4vw, 48px); }
+  header .wrap {
+    display: flex; flex-wrap: wrap; align-items: baseline;
+    justify-content: space-between; gap: 20px 48px;
+  }
+  .logo {
+    font-weight: 300; font-size: 1.05rem; letter-spacing: 0.42em;
+    text-transform: uppercase; white-space: nowrap;
+  }
+  nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 12px clamp(20px, 3.5vw, 44px); }
+  nav a {
+    font-size: 0.72rem; font-weight: 400; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--stone); transition: color .25s ease;
+  }
+  nav a:hover { color: var(--accent); }
+
+  /* Hero */
+  #hero { padding-block: clamp(72px, 14vw, 200px) clamp(64px, 11vw, 160px); }
+  #hero .wrap { position: relative; }
+  .orb {
+    position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+    width: clamp(150px, 30vw, 400px); aspect-ratio: 1; max-width: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 28%, #F4E3C9 0%, #CFE3DA 58%, #B9D6CB 100%);
+    opacity: 0.85; z-index: 0;
+  }
+  #hero h1, #hero p { position: relative; z-index: 1; }
+  #hero h1 {
+    margin: 0; max-width: 14ch;
+    font-weight: 300; font-size: clamp(2rem, 6.2vw, 4.75rem);
+    line-height: 1.18; letter-spacing: 0.08em; text-transform: uppercase;
+    text-wrap: balance;
+  }
+  #hero p {
+    margin: clamp(32px, 5vw, 64px) 0 0; max-width: 58ch;
+    font-size: clamp(0.95rem, 1.2vw, 1.05rem); line-height: 1.95;
+    color: var(--stone); text-wrap: pretty;
+  }
+
+  /* Catálogo */
+  #catalog { padding-block: clamp(32px, 6vw, 80px) clamp(80px, 12vw, 180px); }
+  #catalog h2 {
+    margin: 0 0 clamp(24px, 4vw, 40px);
+    font-weight: 400; font-size: 0.78rem; letter-spacing: 0.34em; text-transform: uppercase;
+  }
+  .grid {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: 1fr;
+    gap: clamp(48px, 6vw, 88px) clamp(24px, 3vw, 48px);
+  }
+  @media (min-width: 640px)  { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+  .card { display: flex; flex-direction: column; min-width: 0; }
+  .card figure {
+    margin: 0; aspect-ratio: 4 / 5; max-width: 100%;
+    background: var(--tint, #EEEEEC); display: grid; place-items: center;
+    overflow: hidden; transition: filter .35s ease;
+  }
+  .card:hover figure { filter: brightness(0.96) saturate(1.1); }
+  .card figure img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .card svg { width: 62%; height: auto; max-width: 100%; display: block; }
+  .card svg * { fill: none; stroke: var(--line); stroke-width: 1.2; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
+  .card svg .solid { fill: rgba(255, 255, 255, 0.6); }
+
+  .card .cat {
+    margin: 28px 0 0; font-size: 0.66rem; font-weight: 400;
+    letter-spacing: 0.26em; text-transform: uppercase; color: var(--stone);
+  }
+  .card h3 {
+    margin: 10px 0 0; font-weight: 400; font-size: 1.05rem;
+    letter-spacing: 0.16em; text-transform: uppercase; line-height: 1.5;
+  }
+  .card .desc { margin: 14px 0 0; font-size: 0.9rem; line-height: 1.85; color: var(--stone); max-width: 44ch; text-wrap: pretty; }
+  .card .price {
+    color: var(--accent);
+    margin: 22px 0 0; font-size: 0.9rem; font-weight: 400; letter-spacing: 0.14em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Filtros y acciones del catálogo */
+  .bar { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 16px 32px; margin-bottom: clamp(40px, 6vw, 72px); }
+  .filters { display: flex; flex-wrap: wrap; gap: 8px 28px; }
+  .filters button {
+    appearance: none; background: none; border: 0; border-bottom: 1px solid transparent; padding: 6px 0;
+    font: inherit; font-size: 0.7rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); cursor: pointer; transition: color .25s ease, border-color .25s ease;
+  }
+  .filters button:hover { color: var(--accent); }
+  .filters button[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+  .count { margin: 0; font-size: 0.72rem; letter-spacing: 0.12em; color: var(--muted); }
+  .ask {
+    align-self: flex-start; margin-top: 18px; appearance: none; background: none; border: 0;
+    border-bottom: 1px solid var(--accent); padding: 4px 0; cursor: pointer;
+    font: inherit; font-size: 0.7rem; font-weight: 400; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink); transition: color .25s ease;
+  }
+  .ask:hover { color: var(--accent); }
+  .filters button:focus-visible, .ask:focus-visible, .c-close:focus-visible, .btn:focus-visible,
+  .field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { outline: 1px solid var(--focus); outline-offset: 4px; }
+
+  /* Formulario de contacto (se construye con JavaScript) */
+  #contacto { padding-block: 0 clamp(80px, 12vw, 160px); }
+  #contacto:not([hidden]) { animation: rise .5s ease both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { #contacto:not([hidden]) { animation: none; } }
+  .panel { background: var(--panel-bg); padding: clamp(28px, 5vw, 72px); }
+  .c-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: clamp(32px, 5vw, 56px); }
+  .panel h2 { margin: 0; font-weight: 400; font-size: 0.78rem; letter-spacing: 0.34em; text-transform: uppercase; }
+  .c-lead { margin: 16px 0 0; max-width: 52ch; color: var(--muted); font-size: 0.95rem; }
+  .c-close {
+    appearance: none; background: none; border: 0; border-bottom: 1px solid var(--rule); padding: 4px 0; cursor: pointer;
+    font: inherit; font-size: 0.7rem; font-weight: 400; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted);
+  }
+  .c-close:hover { color: var(--ink); }
+  .fields { display: grid; grid-template-columns: 1fr; gap: 34px clamp(24px, 4vw, 56px); }
+  @media (min-width: 640px) { .fields { grid-template-columns: repeat(2, minmax(0, 1fr)); } .span2 { grid-column: 1 / -1; } }
+  .field { min-width: 0; }
+  .label-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .field label { font-size: 0.7rem; font-weight: 400; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink); }
+  .counter { font-size: 0.72rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .control { position: relative; margin-top: 6px; }
+  .field input, .field select, .field textarea {
+    width: 100%; appearance: none; border: 0; border-bottom: 1px solid var(--rule); border-radius: 0; background: transparent;
+    font: inherit; font-weight: 400; font-size: 1rem; color: var(--ink); line-height: 1.5;
+    padding: 12px 44px 12px 0; transition: border-color .25s ease;
+  }
+  .field textarea { resize: vertical; min-height: 120px; line-height: 1.7; }
+  .field select {
+    padding-right: 72px; cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%235F5F5B' stroke-width='1.4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 32px center;
+  }
+  .field ::placeholder { color: #8C8C8C; opacity: 1; font-weight: 300; }
+  .field input:focus, .field select:focus, .field textarea:focus { border-bottom-color: var(--ink); }
+  .field[data-state="valid"] input, .field[data-state="valid"] select, .field[data-state="valid"] textarea { border-bottom-color: var(--accent); }
+  .field[data-state="invalid"] input, .field[data-state="invalid"] select, .field[data-state="invalid"] textarea { border-bottom-color: var(--bad); }
+  .mark {
+    --ty: -50%; position: absolute; right: 0; top: 50%; width: 22px; height: 22px; pointer-events: none;
+    opacity: 0; transform: translateY(var(--ty)) scale(0.6); transition: opacity .2s ease, transform .2s ease;
+  }
+  .mark svg { display: block; }
+  .mark.ok { color: var(--accent); }
+  .mark.bad { color: var(--bad); }
+  .field.area .mark { --ty: 0px; top: 14px; }
+  .field[data-state="valid"] .mark.ok, .field[data-state="invalid"] .mark.bad { opacity: 1; transform: translateY(var(--ty)) scale(1); }
+  .hint { margin: 8px 0 0; font-size: 0.78rem; line-height: 1.6; color: var(--muted); min-height: 1.6em; }
+  .field[data-state="valid"] .hint { color: var(--accent); }
+  .field[data-state="invalid"] .hint { color: var(--bad); }
+  .progress { display: flex; flex-wrap: wrap; align-items: center; gap: 20px 32px; margin-top: clamp(36px, 5vw, 56px); }
+  .p-wrap { flex: 1 1 240px; min-width: 0; }
+  .p-text { margin: 0 0 10px; font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .p-track { display: block; height: 2px; background: #CBD6CF; }
+  .p-fill { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s ease; }
+  .btn {
+    appearance: none; border: 0; cursor: pointer; padding: 18px 36px; background: var(--ink); color: var(--bg);
+    font: inherit; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.24em; text-transform: uppercase;
+    transition: background .25s ease;
+  }
+  .btn:hover:not(:disabled) { background: var(--accent); }
+  .btn:disabled { background: #C7CBC6; color: #F5F7F5; cursor: not-allowed; }
+  .done { text-align: left; }
+  .done .done-mark { color: var(--accent); width: 40px; height: 40px; margin-bottom: 24px; }
+  .done .c-lead { margin-bottom: 32px; }
+  .done:focus { outline: none; }
+  @media (prefers-reduced-motion: reduce) { .mark, .p-fill { transition: none; } }
+
+  /* Footer */
+  footer { padding-block: clamp(40px, 6vw, 72px) clamp(40px, 6vw, 64px); }
+  footer .wrap {
+    display: flex; flex-wrap: wrap; align-items: baseline;
+    justify-content: space-between; gap: 20px 48px;
+  }
+  footer small { font-size: 0.72rem; letter-spacing: 0.12em; color: var(--stone); }
+</style>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#hero" aria-label="KSI STUDIO, inicio">KSI STUDIO</a>
+    <nav aria-label="Principal">
+      <ul>
+        <li><a href="#hero">Inicio</a></li>
+        <li><a href="#catalog">Catálogo</a></li>
+        <li><a href="#filosofia">Filosofía</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section id="hero">
+    <div class="wrap">
+      <div class="orb" aria-hidden="true"></div>
+      <h1>Espacios esenciales, formas puras</h1>
+      <p id="filosofia">Diseñamos mobiliario de perfil arquitectónico que celebra la honestidad de los materiales y la sobriedad formal. Piezas atemporales concebidas para habitar el espacio con serenidad y ligereza visual.</p>
+    </div>
+  </section>
+
+  <section id="catalog" aria-labelledby="catalog-title">
+    <div class="wrap">
+      <h2 id="catalog-title">Colección Permanente</h2>
+      <ul class="grid">
+
+        <li class="card" data-cat="sala comedor" style="--tint:#DDE6D6">
+          <figure>
+            <svg viewBox="0 0 200 250" role="img" aria-label="Silla Kora, trazo lineal">
+              <path d="M62 52 Q100 40 138 52"/>
+              <line x1="66" y1="136" x2="62" y2="52"/>
+              <line x1="134" y1="136" x2="138" y2="52"/>
+              <rect class="solid" x="58" y="136" width="84" height="12"/>
+              <line x1="66" y1="148" x2="60" y2="208"/>
+              <line x1="134" y1="148" x2="140" y2="208"/>
+              <line x1="44" y1="208" x2="156" y2="208"/>
+            </svg>
+          </figure>
+          <p class="cat">Sala / Comedor</p>
+          <h3>Silla Kora</h3>
+          <p class="desc">Trazo orgánico esculpido en madera de roble macizo con asiento tapizado en lino natural. Diseñada para integrarse en el espacio sin interrumpir la luz.</p>
+          <p class="price">Bs 280</p>
+        </li>
+
+        <li class="card" data-cat="comedor" style="--tint:#D6E3EC">
+          <figure>
+            <svg viewBox="0 0 200 250" role="img" aria-label="Mesa Voxel, trazo lineal">
+              <rect class="solid" x="24" y="108" width="152" height="9"/>
+              <line x1="58" y1="117" x2="58" y2="208"/>
+              <line x1="142" y1="117" x2="142" y2="208"/>
+              <line x1="58" y1="160" x2="142" y2="160"/>
+              <line x1="44" y1="208" x2="156" y2="208"/>
+            </svg>
+          </figure>
+          <p class="cat">Comedor</p>
+          <h3>Mesa Voxel</h3>
+          <p class="desc">Tablero de mármol pulido sostenido por una estructura geométrica de acero mate. Equilibrio puro entre solidez y ligereza visual.</p>
+          <p class="price">Bs 850</p>
+        </li>
+
+        <li class="card" data-cat="sala" style="--tint:#F2DCC8">
+          <figure>
+            <svg viewBox="0 0 200 250" role="img" aria-label="Sofá Neutra, trazo lineal">
+              <rect class="solid" x="38" y="96" width="124" height="38" rx="3"/>
+              <rect class="solid" x="22" y="118" width="26" height="56" rx="3"/>
+              <rect class="solid" x="152" y="118" width="26" height="56" rx="3"/>
+              <rect class="solid" x="48" y="134" width="104" height="40" rx="2"/>
+              <line x1="34" y1="174" x2="34" y2="186"/>
+              <line x1="166" y1="174" x2="166" y2="186"/>
+              <line x1="44" y1="186" x2="156" y2="186" stroke-opacity="0"/>
+            </svg>
+          </figure>
+          <p class="cat">Sala</p>
+          <h3>Sofá Neutra</h3>
+          <p class="desc">Volúmenes bajos y proporciones generosas envueltas en textil boucle texturizado. Confort de perfil arquitectónico para interiores serenos.</p>
+          <p class="price">Bs 1,200</p>
+        </li>
+
+        <li class="card" data-cat="oficina" style="--tint:#F0E4BF">
+          <figure>
+            <svg viewBox="0 0 200 250" role="img" aria-label="Escritorio Linea, trazo lineal">
+              <rect class="solid" x="22" y="106" width="156" height="6"/>
+              <line x1="40" y1="112" x2="40" y2="208"/>
+              <line x1="160" y1="112" x2="160" y2="208"/>
+              <line x1="32" y1="208" x2="48" y2="208"/>
+              <line x1="152" y1="208" x2="168" y2="208"/>
+              <rect x="108" y="112" width="52" height="34"/>
+            </svg>
+          </figure>
+          <p class="cat">Oficina</p>
+          <h3>Escritorio Linea</h3>
+          <p class="desc">Plano de trabajo en nogal satinado con pasacables oculto y patas de trazo fino. Reducción formal orientada a la concentración diaria.</p>
+          <p class="price">Bs 490</p>
+        </li>
+
+        <li class="card" data-cat="dormitorio" style="--tint:#EBD6DC">
+          <figure>
+            <svg viewBox="0 0 200 250" role="img" aria-label="Cama Aura, trazo lineal">
+              <rect class="solid" x="30" y="84" width="140" height="34" rx="2"/>
+              <rect class="solid" x="30" y="126" width="140" height="26" rx="2"/>
+              <rect x="38" y="152" width="124" height="6"/>
+              <line x1="52" y1="158" x2="52" y2="166"/>
+              <line x1="148" y1="158" x2="148" y2="166"/>
+              <line x1="24" y1="176" x2="176" y2="176" stroke-opacity="0.45"/>
+            </svg>
+          </figure>
+          <p class="cat">Dormitorio</p>
+          <h3>Cama Aura</h3>
+          <p class="desc">Estructura flotante de madera clara con cabezal acolchado de perfil ultradelgado. Calidez táctil y descanso sin artificios.</p>
+          <p class="price">Bs 980</p>
+        </li>
+
+        <li class="card" data-cat="almacenamiento oficina" style="--tint:#CFE5DD">
+          <figure>
+            <svg viewBox="0 0 200 250" role="img" aria-label="Estantería Vértice, trazo lineal">
+              <rect x="52" y="36" width="96" height="172"/>
+              <line x1="52" y1="82" x2="148" y2="82"/>
+              <line x1="52" y1="128" x2="148" y2="128"/>
+              <line x1="52" y1="168" x2="148" y2="168"/>
+              <rect class="solid" x="66" y="58" width="16" height="24"/>
+              <circle cx="116" cy="70" r="12" class="solid"/>
+              <rect class="solid" x="100" y="108" width="34" height="20"/>
+              <rect class="solid" x="64" y="146" width="12" height="22"/>
+              <line x1="42" y1="208" x2="158" y2="208"/>
+            </svg>
+          </figure>
+          <p class="cat">Almacenamiento / Oficina</p>
+          <h3>Estantería Vértice</h3>
+          <p class="desc">Módulo abierto de repisas enrejadas en aluminio cepillado. Estructura modular diseñada para exhibir objetos esenciales con sutileza.</p>
+          <p class="price">Bs 620</p>
+        </li>
+
+      </ul>
+    </div>
+  </section>
+
+  <section id="contacto" aria-labelledby="contact-title" hidden>
+    <div class="wrap">
+      <div class="panel" id="contact-root"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <small>© 2026 KSI STUDIO. Todos los derechos reservados.</small>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  /* Crea un elemento: attrs es un objeto (o null) y kids un texto, un nodo o una lista. */
+  function el(tag, attrs, kids) {
+    var n = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) { n.setAttribute(k, attrs[k]); });
+    if (kids != null) [].concat(kids).forEach(function (k) {
+      n.appendChild(typeof k === 'string' ? document.createTextNode(k) : k);
+    });
+    return n;
+  }
+
+  /* ---------- Catálogo: filtros por categoría ---------- */
+  var CATS = [
+    ['todas', 'Todas'], ['sala', 'Sala'], ['comedor', 'Comedor'],
+    ['oficina', 'Oficina'], ['dormitorio', 'Dormitorio'], ['almacenamiento', 'Almacenamiento']
+  ];
+  var catalogGrid = document.querySelector('#catalog .grid');
+  var cards = [].slice.call(catalogGrid.querySelectorAll('.card'));
+  var PIECES = cards.map(function (c) { return c.querySelector('h3').textContent.trim(); });
+
+  var filters = el('div', { 'class': 'filters', role: 'group', 'aria-label': 'Filtrar por categoría' });
+  CATS.forEach(function (c) {
+    filters.appendChild(el('button', {
+      type: 'button', 'data-cat': c[0], 'aria-pressed': c[0] === 'todas' ? 'true' : 'false'
+    }, c[1]));
+  });
+  var count = el('p', { 'class': 'count', 'aria-live': 'polite' }, 'Mostrando ' + cards.length + ' de ' + cards.length + ' piezas');
+  document.getElementById('catalog-title').insertAdjacentElement('afterend', el('div', { 'class': 'bar' }, [filters, count]));
+
+  filters.addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (!b) return;
+    var cat = b.getAttribute('data-cat');
+    [].forEach.call(filters.children, function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    var shown = 0;
+    cards.forEach(function (card) {
+      var ok = cat === 'todas' || card.getAttribute('data-cat').split(' ').indexOf(cat) > -1;
+      card.hidden = !ok;
+      if (ok) shown++;
+    });
+    count.textContent = 'Mostrando ' + shown + ' de ' + cards.length + ' piezas';
+  });
+
+  /* Botón "Consultar" en cada tarjeta: abre el formulario con la pieza elegida */
+  cards.forEach(function (card, i) {
+    card.appendChild(el('button', {
+      type: 'button', 'class': 'ask', 'data-piece': PIECES[i], 'aria-label': 'Consultar por ' + PIECES[i]
+    }, 'Consultar'));
+  });
+  catalogGrid.addEventListener('click', function (e) {
+    var b = e.target.closest('.ask');
+    if (b) openForm(b.getAttribute('data-piece'));
+  });
+
+  /* ---------- Formulario de contacto (6 campos, validación en tiempo real) ---------- */
+  var CHECK = '<svg viewBox="0 0 24 24" width="22" height="22" focusable="false"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M7 12.5l3.2 3.2L17 8.8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var CROSS = '<svg viewBox="0 0 24 24" width="22" height="22" focusable="false"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>';
+
+  function checkName(v) {
+    v = v.trim();
+    if (!v) return 'Escribe tu nombre completo.';
+    if (!/^[\p{L}' -]+$/u.test(v)) return 'Usa solo letras, sin números ni símbolos.';
+    var parts = v.split(/\s+/).filter(Boolean);
+    if (parts.length < 2) return 'Falta el apellido. Ej.: María Quispe.';
+    if (parts.some(function (p) { return p.replace(/['-]/g, '').length < 2; })) return 'Cada nombre debe tener al menos 2 letras.';
+    if (v.length > 60) return 'Máximo 60 caracteres (llevas ' + v.length + ').';
+    return '';
+  }
+  function checkEmail(v) {
+    v = v.trim();
+    if (!v) return 'Escribe tu correo electrónico.';
+    if (/\s/.test(v)) return 'El correo no puede tener espacios.';
+    var at = v.indexOf('@');
+    if (at === -1) return 'Falta el símbolo @.';
+    if (at === 0) return 'Falta el nombre antes del @.';
+    if (v.split('@').length > 2) return 'Solo puede haber un @.';
+    var domain = v.slice(at + 1);
+    if (!domain) return 'Falta el dominio después del @, ej. correo.com';
+    if (domain.indexOf('.') === -1) return 'Al dominio le falta el punto, ej. correo.com';
+    if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$/.test(v)) return 'Revisa el formato, ej. maria@correo.com';
+    return '';
+  }
+  function checkPhone(v) {
+    var s = v.replace(/[\s-]/g, '');
+    if (!s) return 'Escribe tu número de contacto.';
+    if (s.indexOf('+591') === 0) s = s.slice(4);
+    else if (/^591\d{8}$/.test(s)) s = s.slice(3);
+    if (!/^\d+$/.test(s)) return 'Usa solo números (puedes añadir +591 al inicio).';
+    if (s.length !== 8) return 'Debe tener 8 dígitos y llevas ' + s.length + '.';
+    if (!/^[2-467]/.test(s)) return 'Debe empezar con 6 o 7 (celular) o con 2, 3 o 4 (fijo).';
+    return '';
+  }
+  function checkCity(v) {
+    v = v.trim();
+    if (!v) return 'Escribe tu ciudad.';
+    if (!/^[\p{L}][\p{L} .'-]*$/u.test(v)) return 'Usa solo letras, ej.: La Paz.';
+    if (v.length < 2) return 'Escribe al menos 2 letras.';
+    if (v.length > 40) return 'Máximo 40 caracteres (llevas ' + v.length + ').';
+    return '';
+  }
+  function checkPiece(v) { return v ? '' : 'Elige la pieza que te interesa.'; }
+  function checkMessage(v) {
+    var n = v.trim().length;
+    if (!n) return 'Cuéntanos qué necesitas.';
+    if (n < 20) return 'Escribe al menos 20 caracteres (llevas ' + n + ').';
+    if (n > 300) return 'Máximo 300 caracteres (llevas ' + n + ').';
+    return '';
+  }
+
+  /* Exactamente 6 campos */
+  var FIELDS = [
+    { name: 'nombre', label: 'Nombre completo', tag: 'input', type: 'text', autocomplete: 'name',
+      example: 'María Fernanda Quispe', rule: 'Nombre y apellido.', check: checkName },
+    { name: 'correo', label: 'Correo electrónico', tag: 'input', type: 'email', autocomplete: 'email',
+      example: 'maria@correo.com', rule: 'Con @ y dominio.', check: checkEmail },
+    { name: 'telefono', label: 'Teléfono', tag: 'input', type: 'tel', autocomplete: 'tel',
+      example: '71234567', rule: '8 dígitos, con o sin +591.', check: checkPhone },
+    { name: 'ciudad', label: 'Ciudad', tag: 'input', type: 'text', autocomplete: 'address-level2',
+      example: 'La Paz', rule: 'Solo letras.', check: checkCity },
+    { name: 'pieza', label: 'Pieza de interés', tag: 'select', span: true,
+      example: 'Mesa Voxel', rule: 'Elige una de la colección.', check: checkPiece },
+    { name: 'mensaje', label: 'Mensaje', tag: 'textarea', span: true, counter: true,
+      example: 'Me interesa la mesa en mármol. ¿Hay disponibilidad y cuánto demora la entrega?',
+      rule: 'Entre 20 y 300 caracteres.', check: checkMessage }
+  ];
+  FIELDS.forEach(function (f) { f.hint = f.rule + ' Ej.: ' + f.example; });
+
+  var section = document.getElementById('contacto');
+  var root = document.getElementById('contact-root');
+  var form = null, touched = {}, done = false;
+
+  function buildField(f) {
+    var id = 'f-' + f.name;
+    var control;
+    if (f.tag === 'select') {
+      control = el('select', { id: id, name: f.name, 'aria-describedby': 'h-' + f.name, 'aria-invalid': 'false' },
+        [el('option', { value: '' }, 'Elige una pieza (ej.: ' + f.example + ')')].concat(
+          PIECES.map(function (p) { return el('option', { value: p }, p); })));
+    } else if (f.tag === 'textarea') {
+      control = el('textarea', { id: id, name: f.name, rows: '5', placeholder: f.example,
+        'aria-describedby': 'h-' + f.name, 'aria-invalid': 'false' });
+    } else {
+      control = el('input', { id: id, name: f.name, type: f.type, placeholder: f.example,
+        autocomplete: f.autocomplete, 'aria-describedby': 'h-' + f.name, 'aria-invalid': 'false' });
+    }
+    var ok = el('span', { 'class': 'mark ok', 'aria-hidden': 'true' });
+    var bad = el('span', { 'class': 'mark bad', 'aria-hidden': 'true' });
+    ok.innerHTML = CHECK;
+    bad.innerHTML = CROSS;
+    var labelRow = el('div', { 'class': 'label-row' }, [el('label', { 'for': id }, f.label)]);
+    if (f.counter) labelRow.appendChild(el('span', { 'class': 'counter' }, '0/300'));
+    return el('div', {
+      'class': 'field' + (f.span ? ' span2' : '') + (f.tag === 'textarea' ? ' area' : ''),
+      'data-field': f.name, 'data-state': 'idle'
+    }, [labelRow, el('div', { 'class': 'control' }, [control, ok, bad]), el('p', { 'class': 'hint', id: 'h-' + f.name }, f.hint)]);
+  }
+
+  function buildForm() {
+    done = false;
+    touched = {};
+    root.textContent = '';
+    var close = el('button', { type: 'button', 'class': 'c-close' }, 'Cerrar');
+    close.addEventListener('click', function () { section.hidden = true; });
+    root.appendChild(el('div', { 'class': 'c-head' }, [
+      el('div', null, [
+        el('h2', { id: 'contact-title' }, 'Contacto'),
+        el('p', { 'class': 'c-lead' }, 'Cuéntanos qué pieza te interesa. Cada dato se marca con un check cuando es correcto y se revisa mientras escribes.')
+      ]),
+      close
+    ]));
+
+    form = el('form', { id: 'contact-form', novalidate: '', 'aria-labelledby': 'contact-title' });
+    var fields = el('div', { 'class': 'fields' });
+    FIELDS.forEach(function (f) { fields.appendChild(buildField(f)); });
+    form.appendChild(fields);
+
+    var submit = el('button', { type: 'submit', 'class': 'btn', id: 'c-submit', disabled: '' }, 'Enviar consulta');
+    form.appendChild(el('div', { 'class': 'progress' }, [
+      el('div', { 'class': 'p-wrap' }, [
+        el('p', { 'class': 'p-text', id: 'p-text', 'aria-live': 'polite' }, '0 de ' + FIELDS.length + ' campos correctos'),
+        el('span', { 'class': 'p-track' }, [el('span', { 'class': 'p-fill', id: 'p-fill' })])
+      ]),
+      submit
+    ]));
+
+    form.addEventListener('input', onEdit);
+    form.addEventListener('change', onEdit);
+    form.addEventListener('focusout', onEdit);
+    form.addEventListener('submit', onSubmit);
+    root.appendChild(form);
+    refresh();
+  }
+
+  function onEdit(e) {
+    var name = e.target && e.target.name;
+    if (!name) return;
+    touched[name] = true;
+    refresh();
+  }
+
+  /* Revisa los 6 campos y actualiza marcas, mensajes, contador y barra de progreso */
+  function refresh() {
+    var valid = 0;
+    FIELDS.forEach(function (f) {
+      var input = form.elements[f.name];
+      var msg = f.check(input.value);
+      var wrap = form.querySelector('[data-field="' + f.name + '"]');
+      var state = !msg ? 'valid' : (touched[f.name] ? 'invalid' : 'idle');
+      wrap.setAttribute('data-state', state);
+      input.setAttribute('aria-invalid', state === 'invalid' ? 'true' : 'false');
+      wrap.querySelector('.hint').textContent = state === 'valid' ? 'Correcto.' : (state === 'invalid' ? msg : f.hint);
+      if (f.counter) wrap.querySelector('.counter').textContent = input.value.trim().length + '/300';
+      if (!msg) valid++;
+    });
+    document.getElementById('p-text').textContent = valid + ' de ' + FIELDS.length + ' campos correctos';
+    document.getElementById('p-fill').style.width = Math.round(valid / FIELDS.length * 100) + '%';
+    document.getElementById('c-submit').disabled = valid < FIELDS.length;
+  }
+
+  function onSubmit(e) {
+    e.preventDefault();
+    var firstBad = null;
+    FIELDS.forEach(function (f) {
+      touched[f.name] = true;
+      if (!firstBad && f.check(form.elements[f.name].value)) firstBad = f.name;
+    });
+    refresh();
+    if (firstBad) { form.elements[firstBad].focus(); return; }
+    showDone();
+  }
+
+  function showDone() {
+    done = true;
+    var v = {};
+    FIELDS.forEach(function (f) { v[f.name] = form.elements[f.name].value.trim(); });
+    /* Aquí se enviaría el objeto `v` a tu servidor o servicio de correo. */
+    root.textContent = '';
+    var mark = el('div', { 'class': 'done-mark', 'aria-hidden': 'true' });
+    mark.innerHTML = CHECK.replace('width="22" height="22"', 'width="40" height="40"');
+    var again = el('button', { type: 'button', 'class': 'btn' }, 'Nueva consulta');
+    again.addEventListener('click', function () { buildForm(); form.elements.nombre.focus(); });
+    var box = el('div', { 'class': 'done', role: 'status', tabindex: '-1' }, [
+      mark,
+      el('h2', { id: 'contact-title' }, 'Datos validados'),
+      el('p', { 'class': 'c-lead' }, 'Los ' + FIELDS.length + ' campos son correctos. Consulta sobre ' + v.pieza + ' a nombre de ' + v.nombre + ', desde ' + v.ciudad + '.'),
+      again
+    ]);
+    root.appendChild(box);
+    box.focus();
+  }
+
+  function openForm(piece) {
+    if (section.hidden || done || !form) { section.hidden = false; buildForm(); }
+    if (piece && PIECES.indexOf(piece) > -1) {
+      form.elements.pieza.value = piece;
+      touched.pieza = true;
+      refresh();
+    }
+    section.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'start' });
+    form.elements.nombre.focus({ preventScroll: true });
+  }
+
+  /* El enlace "Contacto" del menú abre el formulario */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href="#contacto"]');
+    if (!a) return;
+    e.preventDefault();
+    openForm();
+  });
+  window.addEventListener('hashchange', function () { if (location.hash === '#contacto') openForm(); });
+  if (location.hash === '#contacto') openForm();
+})();
+</script>
+
+</body></html>
