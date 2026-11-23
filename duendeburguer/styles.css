@@ -1,0 +1,286 @@
+/* =========================================================
+   DuendeBurguer II - Hoja de estilos (Mobile-First)
+   Diseño de una sola pantalla: sin scroll de página.
+   ========================================================= */
+
+/* ---------- Variables de diseño ---------- */
+:root {
+  --bg: #14110f;
+  --bg-card: #1f1a17;
+  --bg-soft: #2a231f;
+  --mostaza: #f5b820;
+  --naranja: #ff6b2c;
+  --rojo: #e63946;
+  --verde: #2ecc71;
+  --texto: #f5efe6;
+  --texto-suave: #b8ada0;
+  --borde: #3a312b;
+  --radio: 14px;
+  --font-titulo: 'Bebas Neue', Impact, sans-serif;
+  --font-texto: 'Poppins', system-ui, sans-serif;
+}
+
+/* ---------- Reset básico ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+body { font-family: var(--font-texto); background: var(--bg); color: var(--texto); line-height: 1.35; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- Estructura general: encabezado / contenido / barra inferior ---------- */
+.app {
+  height: 100vh;
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ---------- Botones ---------- */
+.btn {
+  display: inline-block;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.15s ease, filter 0.2s ease;
+}
+.btn:hover { transform: translateY(-1px); filter: brightness(1.08); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+.btn-primary { background: linear-gradient(135deg, var(--mostaza), var(--naranja)); color: #1a1209; }
+.btn-whatsapp { background: #25d366; color: #06210f; width: 100%; font-size: 1rem; }
+.btn-ghost { background: transparent; border: 1px solid var(--borde); color: var(--texto-suave); }
+.btn-ghost:hover { border-color: var(--rojo); color: var(--rojo); }
+
+/* =========================================================
+   ENCABEZADO FIJO + MENÚ HAMBURGUESA
+   ========================================================= */
+.site-header {
+  position: relative;
+  z-index: 50;
+  background: #14110f;
+  border-bottom: 2px solid var(--mostaza);
+}
+.header-top { display: flex; align-items: center; justify-content: space-between; padding: 0.35rem 0.9rem; }
+.logo { display: flex; align-items: center; gap: 0.5rem; }
+.logo-icon { font-size: 1.6rem; }
+.logo-info { display: flex; flex-direction: column; line-height: 1.1; }
+.logo-text { font-family: var(--font-titulo); font-size: 1.5rem; letter-spacing: 1px; color: var(--mostaza); }
+.logo-text span { color: var(--naranja); }
+.schedule { color: var(--texto-suave); font-size: 0.72rem; font-weight: 500; }
+
+.hamburger { display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 42px; height: 42px; background: transparent; border: none; cursor: pointer; }
+.hamburger span { display: block; height: 3px; width: 26px; margin: 0 auto; background: var(--mostaza); border-radius: 3px; transition: transform 0.3s ease, opacity 0.3s ease; }
+.hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* Navegación desplegable (superpuesta, no empuja el contenido) */
+.main-nav {
+  position: absolute; top: 100%; left: 0; right: 0;
+  max-height: 0; overflow: hidden;
+  background: var(--bg-card);
+  transition: max-height 0.3s ease;
+}
+.main-nav.open { max-height: 320px; border-bottom: 2px solid var(--mostaza); }
+.nav-links { padding: 0.3rem 1rem; }
+.nav-links a { display: block; padding: 0.65rem 0; font-weight: 600; border-bottom: 1px solid var(--borde); }
+.nav-links a:hover { color: var(--mostaza); }
+.socials { display: flex; gap: 0.6rem; padding: 0.7rem 1rem 0.9rem; }
+.social { padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; border: 1px solid var(--borde); }
+.social.tiktok:hover { border-color: #ff2d55; color: #ff2d55; }
+.social.whatsapp:hover { border-color: #25d366; color: #25d366; }
+
+/* =========================================================
+   VISTAS (cada una cabe en la pantalla)
+   ========================================================= */
+.app-main { min-height: 0; }
+.view {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.6rem 0.8rem;
+  overflow-y: auto; /* solo como respaldo en pantallas muy pequeñas */
+}
+.view-title { font-family: var(--font-titulo); font-size: 1.7rem; letter-spacing: 1px; color: var(--mostaza); line-height: 1; }
+
+/* ---------- Buscador y filtros ---------- */
+.search-box input {
+  width: 100%;
+  padding: 0.55rem 1rem;
+  border-radius: 50px;
+  border: 2px solid var(--borde);
+  background: var(--bg-card);
+  outline: none;
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+}
+.search-box input:focus { border-color: var(--mostaza); }
+
+.filters { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.filter-btn {
+  padding: 0.3rem 0.75rem;
+  border-radius: 50px;
+  border: 1px solid var(--borde);
+  background: var(--bg-card);
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.filter-btn:hover { border-color: var(--naranja); }
+.filter-btn.active { background: var(--mostaza); color: #1a1209; border-color: var(--mostaza); font-weight: 700; }
+
+/* ---------- Grilla de productos: ocupa todo el alto disponible ---------- */
+.menu-grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+  gap: 0.5rem;
+}
+.card {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-card);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+.card:hover { border-color: var(--naranja); }
+.card-img { flex: 1 1 0; min-height: 40px; width: 100%; object-fit: cover; background: var(--bg-soft); }
+.card-body { padding: 0.4rem 0.5rem 0.5rem; display: flex; flex-direction: column; gap: 0.2rem; }
+.card-top { display: flex; justify-content: space-between; align-items: center; gap: 0.3rem; }
+.card-title { font-family: var(--font-titulo); font-size: 1.1rem; letter-spacing: 0.4px; line-height: 1.05; }
+.card-price { background: var(--rojo); color: #fff; font-weight: 700; padding: 0.1rem 0.5rem; border-radius: 50px; white-space: nowrap; font-size: 0.75rem; }
+.card-desc {
+  color: var(--texto-suave); font-size: 0.68rem; line-height: 1.25;
+  display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.add-btn {
+  padding: 0.35rem;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--naranja), var(--rojo));
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: filter 0.2s, transform 0.1s;
+}
+.add-btn:hover { filter: brightness(1.12); }
+.add-btn:active { transform: scale(0.96); }
+.empty-msg { text-align: center; color: var(--texto-suave); padding: 1.5rem 0; }
+
+/* ---------- Paginador ---------- */
+.pager { display: flex; align-items: center; justify-content: center; gap: 1rem; font-weight: 600; font-size: 0.9rem; }
+.pager-btn { width: 40px; height: 32px; border-radius: 50px; border: 1px solid var(--mostaza); background: transparent; color: var(--mostaza); font-size: 1.3rem; line-height: 1; cursor: pointer; transition: background 0.2s, color 0.2s; }
+.pager-btn:hover:not(:disabled) { background: var(--mostaza); color: #1a1209; }
+.pager-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* =========================================================
+   VISTA: PEDIDO
+   ========================================================= */
+.cart-items { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; }
+.cart-empty { text-align: center; color: var(--texto-suave); padding: 2rem 0; }
+.cart-item { padding: 0.5rem 0; border-bottom: 1px dashed var(--borde); }
+.cart-item-top { display: flex; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.3rem; font-size: 0.92rem; }
+.cart-item-name { font-weight: 600; }
+.cart-item-price { color: var(--mostaza); font-weight: 700; white-space: nowrap; }
+.cart-item-controls { display: flex; align-items: center; gap: 0.4rem; }
+.qty-btn { flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--mostaza); background: transparent; color: var(--mostaza); font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s, color 0.2s; }
+.qty-btn:hover { background: var(--mostaza); color: #1a1209; }
+.qty-value { min-width: 20px; text-align: center; font-weight: 700; }
+.item-note { flex: 1; min-width: 0; padding: 0.4rem 0.7rem; border-radius: 10px; border: 1px solid var(--borde); background: var(--bg-soft); font-size: 0.78rem; outline: none; }
+.item-note:focus { border-color: var(--mostaza); }
+.remove-btn { flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%; border: none; background: rgba(230, 57, 70, 0.15); color: var(--rojo); cursor: pointer; font-size: 0.9rem; }
+.remove-btn:hover { background: var(--rojo); color: #fff; }
+
+.cart-footer { display: flex; flex-direction: column; gap: 0.5rem; background: var(--bg-card); border: 1px solid var(--borde); border-radius: var(--radio); padding: 0.7rem; }
+.cart-footer input { padding: 0.5rem 0.8rem; border-radius: 10px; border: 1px solid var(--borde); background: var(--bg-soft); font-size: 0.85rem; outline: none; }
+.cart-footer input:focus { border-color: var(--mostaza); }
+.cart-totals .row { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--texto-suave); }
+.cart-totals .total { font-size: 1.2rem; font-weight: 700; color: var(--mostaza); }
+.cart-actions { display: grid; grid-template-columns: 1fr 2fr; gap: 0.5rem; }
+
+/* =========================================================
+   VISTA: CHECKOUT + VALIDACIÓN
+   ========================================================= */
+.checkout-head { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.summary-chip { border: 1px solid var(--mostaza); background: transparent; color: var(--mostaza); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+.checkout-form { display: flex; flex-direction: column; gap: 0.5rem; background: var(--bg-card); border: 1px solid var(--borde); border-radius: var(--radio); padding: 0.8rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; }
+.form-group label { font-weight: 600; font-size: 0.8rem; }
+.form-group input, .form-group select { width: 100%; padding: 0.5rem 0.7rem; border-radius: 10px; border: 2px solid var(--borde); background: var(--bg-soft); font-size: 0.88rem; outline: none; transition: border-color 0.2s; }
+.form-group select option { background: var(--bg-soft); }
+.form-group input:focus, .form-group select:focus { border-color: var(--mostaza); }
+
+/* Estados de validación (clases agregadas desde JS) */
+.form-group input.is-invalid, .form-group select.is-invalid { border-color: var(--rojo); }
+.form-group input.is-valid, .form-group select.is-valid { border-color: var(--verde); }
+.feedback { min-height: 1em; font-size: 0.68rem; font-weight: 500; line-height: 1.15; }
+.feedback.error { color: var(--rojo); }
+.feedback.success { color: var(--verde); }
+
+.form-alert { padding: 0.5rem 0.8rem; border-radius: 10px; font-weight: 600; font-size: 0.8rem; }
+.form-alert.error { background: rgba(230, 57, 70, 0.15); border: 1px solid var(--rojo); color: #ff8b94; }
+.form-alert.success { background: rgba(46, 204, 113, 0.15); border: 1px solid var(--verde); color: #7ff0ae; }
+
+/* =========================================================
+   BARRA INFERIOR + AVISO
+   ========================================================= */
+.tabbar { display: grid; grid-template-columns: repeat(3, 1fr); background: #14110f; border-top: 2px solid var(--borde); padding-bottom: env(safe-area-inset-bottom); }
+.tab { display: flex; flex-direction: column; align-items: center; gap: 0.05rem; padding: 0.4rem 0; background: transparent; border: none; color: var(--texto-suave); font-size: 0.72rem; font-weight: 600; cursor: pointer; transition: color 0.2s; }
+.tab-ico { position: relative; font-size: 1.25rem; line-height: 1.2; }
+.tab.active { color: var(--mostaza); box-shadow: inset 0 3px 0 var(--mostaza); }
+.badge { position: absolute; top: -4px; right: -12px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; background: var(--rojo); color: #fff; font-size: 0.68rem; line-height: 18px; text-align: center; }
+.badge.bump { animation: bump 0.3s ease; }
+@keyframes bump { 50% { transform: scale(1.35); } }
+
+.toast {
+  position: fixed; left: 50%; bottom: 4.6rem; z-index: 80;
+  transform: translate(-50%, 20px);
+  background: var(--verde); color: #04210f; font-weight: 700; font-size: 0.85rem;
+  padding: 0.45rem 1rem; border-radius: 50px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (min-width: 640px) {
+  .card-title { font-size: 1.25rem; }
+  .card-desc { font-size: 0.75rem; }
+  .menu-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (min-width: 900px) {
+  /* Escritorio: hamburguesa oculta, navegación en línea, 4 columnas x 2 filas (8 platillos sin paginar) */
+  .header-top { padding: 0.4rem 1.2rem; }
+  .header-top { justify-content: flex-start; gap: 2rem; }
+  .hamburger { display: none; }
+  .site-header { display: flex; align-items: center; justify-content: space-between; }
+  .main-nav { position: static; max-height: none; overflow: visible; background: transparent; display: flex; align-items: center; gap: 1.5rem; border: none !important; padding-right: 1.2rem; }
+  .nav-links { display: flex; gap: 1.2rem; padding: 0; }
+  .nav-links a { border: none; padding: 0.3rem 0; }
+  .socials { padding: 0; }
+  .menu-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .view { padding: 0.8rem 1.2rem; }
+  #view-cart, #view-checkout { max-width: 640px; width: 100%; margin: 0 auto; }
+  .tabbar { max-width: 640px; width: 100%; margin: 0 auto; }
+}
