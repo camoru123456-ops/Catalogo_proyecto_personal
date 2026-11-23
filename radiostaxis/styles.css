@@ -1,0 +1,380 @@
+/* ==========================================================
+   Radio Taxi PAXSIAS - Hoja de estilos
+   Mobile-First · Flexbox + Grid · Alto contraste
+   ========================================================== */
+
+/* ---------- Variables de diseño ---------- */
+:root {
+  --azul: #1B365D;
+  --azul-oscuro: #12253f;
+  --amarillo: #F4B400;
+  --amarillo-hover: #ffc72e;
+  --blanco: #ffffff;
+  --gris-claro: #f3f5f8;
+  --gris-borde: #d5dbe5;
+  --texto: #1c2430;
+  --rojo: #c62828;
+  --rojo-fondo: #fdecec;
+  --verde: #1e7d3a;
+  --verde-fondo: #e6f6ea;
+  --ambar-fondo: #fff4d6;
+  --radio: 12px;
+  --sombra: 0 2px 10px rgba(18, 37, 63, .15);
+  --alto-header: 60px;
+}
+
+/* ---------- Reset básico ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--alto-header) + 8px); }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--texto);
+  background: var(--gris-claro);
+  line-height: 1.4;
+}
+
+img { max-width: 100%; display: block; }
+h1, h2, h3, p { margin: 0; }
+ul { list-style: none; margin: 0; padding: 0; }
+a { color: inherit; }
+
+:focus-visible { outline: 3px solid var(--amarillo); outline-offset: 2px; }
+
+/* ---------- Botones ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  padding: .65rem 1rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font-size: .95rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .2s, transform .1s;
+}
+.btn:active { transform: scale(.97); }
+
+.btn-call { background: var(--amarillo); color: var(--azul-oscuro); }
+.btn-call:hover { background: var(--amarillo-hover); }
+
+.btn-primary { background: var(--azul); color: var(--blanco); }
+.btn-primary:hover { background: var(--azul-oscuro); }
+
+.btn-block { width: 100%; margin-top: .6rem; padding: .8rem 1rem; font-size: 1rem; }
+
+/* ---------- Encabezado fijo ---------- */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: var(--azul);
+  color: var(--blanco);
+  box-shadow: var(--sombra);
+}
+
+.header-bar {
+  height: var(--alto-header);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  padding: 0 .75rem;
+}
+
+.logo { display: flex; align-items: center; gap: .5rem; text-decoration: none; min-width: 0; }
+.logo-icon { font-size: 1.6rem; }
+.logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+.logo-text strong { font-size: .95rem; letter-spacing: .3px; }
+.logo-text small { color: var(--amarillo); font-size: .72rem; font-weight: 600; }
+
+/* En móvil el botón del header muestra solo el icono + número corto */
+.btn-call-header { padding: .5rem .7rem; font-size: .8rem; margin-left: auto; }
+.btn-call-header span { display: none; }
+.btn-call-header::after { content: "22224489"; }
+
+/* Hamburguesa */
+.menu-toggle {
+  width: 42px; height: 42px;
+  display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+  background: transparent;
+  border: 2px solid var(--amarillo);
+  border-radius: 10px;
+  cursor: pointer;
+}
+.menu-toggle span {
+  display: block; width: 20px; height: 2px;
+  background: var(--amarillo);
+  transition: transform .25s, opacity .2s;
+}
+.menu-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.menu-toggle.open span:nth-child(2) { opacity: 0; }
+.menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Navegación desplegable (móvil) */
+.main-nav {
+  max-height: 0;
+  overflow: hidden;
+  background: var(--azul-oscuro);
+  transition: max-height .3s ease;
+}
+.main-nav.open { max-height: 220px; }
+.main-nav a {
+  display: block;
+  padding: .85rem 1rem;
+  text-decoration: none;
+  font-weight: 600;
+  border-top: 1px solid rgba(255, 255, 255, .1);
+}
+.main-nav a:hover { background: rgba(244, 180, 0, .15); color: var(--amarillo); }
+
+/* ---------- Contenido principal ---------- */
+main { padding-top: var(--alto-header); }
+
+.hero {
+  background: linear-gradient(135deg, var(--azul) 0%, var(--azul-oscuro) 100%);
+  color: var(--blanco);
+  padding: .9rem .9rem 1rem;
+  text-align: center;
+}
+.hero h1 { font-size: 1.25rem; line-height: 1.2; }
+.hero h1 span { color: var(--amarillo); }
+.hero p { margin-top: .3rem; font-size: .85rem; opacity: .9; }
+
+/* Contenedor: una columna en móvil, dos en escritorio */
+.layout {
+  display: grid;
+  gap: .75rem;
+  padding: .75rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.panel {
+  background: var(--blanco);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: .85rem;
+}
+.panel h2 {
+  font-size: 1.05rem;
+  color: var(--azul);
+  margin-bottom: .6rem;
+  padding-left: .5rem;
+  border-left: 5px solid var(--amarillo);
+}
+
+/* ---------- Filtros ---------- */
+.filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .4rem;
+  margin-bottom: .7rem;
+}
+.filter-btn {
+  padding: .5rem .4rem;
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--azul);
+  background: var(--blanco);
+  border: 2px solid var(--azul);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.filter-btn:hover { background: var(--gris-claro); }
+.filter-btn.active { background: var(--azul); color: var(--blanco); }
+
+/* ---------- Tarjetas compactas (imagen a la izquierda) ---------- */
+.cards { display: grid; gap: .6rem; }
+
+.card {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: .6rem;
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radio);
+  overflow: hidden;
+  background: var(--blanco);
+}
+.card[hidden] { display: none; }
+
+.card-img {
+  width: 100%; height: 100%;
+  min-height: 120px;
+  object-fit: cover;
+  background: var(--azul);
+}
+
+.card-body { padding: .5rem .5rem .6rem 0; display: flex; flex-direction: column; gap: .25rem; }
+.card-body h3 { font-size: .95rem; color: var(--azul); }
+.card-desc { font-size: .8rem; }
+.card-uso { font-size: .75rem; color: #4a5568; }
+.card-uso strong { color: var(--azul); }
+
+.card-btn {
+  align-self: flex-start;
+  margin-top: .2rem;
+  padding: .45rem .8rem;
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--azul-oscuro);
+  background: var(--amarillo);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.card-btn:hover { background: var(--amarillo-hover); }
+
+/* ---------- Formulario ---------- */
+.form-grid { display: grid; gap: .55rem; }
+.field { display: flex; flex-direction: column; gap: .2rem; }
+.field label { font-size: .8rem; font-weight: 700; color: var(--azul); }
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: .55rem .65rem;
+  font: inherit;
+  font-size: .9rem;
+  border: 2px solid var(--gris-borde);
+  border-radius: 8px;
+  background: var(--blanco);
+  resize: none;
+  transition: border-color .2s, background .2s;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus { outline: none; border-color: var(--azul); }
+
+.field.is-invalid input,
+.field.is-invalid select { border-color: var(--rojo); background: var(--rojo-fondo); }
+.field.is-valid input,
+.field.is-valid select { border-color: var(--verde); background: var(--verde-fondo); }
+
+/* El mensaje de error solo ocupa espacio cuando tiene texto (evita scroll) */
+.error-msg { color: var(--rojo); font-size: .72rem; font-weight: 600; }
+.error-msg:empty { display: none; }
+
+/* Alerta general del formulario */
+.alert {
+  margin-bottom: .6rem;
+  padding: .55rem .75rem;
+  border-radius: 8px;
+  font-size: .85rem;
+  font-weight: 700;
+}
+.alert-error { background: var(--rojo-fondo); color: var(--rojo); border: 2px solid var(--rojo); }
+.alert-success { background: var(--verde-fondo); color: var(--verde); border: 2px solid var(--verde); }
+.alert-warning { background: var(--ambar-fondo); color: #7a5a00; border: 2px solid var(--amarillo); }
+
+/* ---------- Resumen de la solicitud ---------- */
+.resumen {
+  margin-top: .7rem;
+  padding: .7rem;
+  background: var(--verde-fondo);
+  border: 2px solid var(--verde);
+  border-radius: var(--radio);
+  font-size: .85rem;
+}
+.resumen h3 { color: var(--verde); font-size: .95rem; margin-bottom: .35rem; }
+.resumen dl { display: grid; grid-template-columns: auto 1fr; gap: .15rem .6rem; margin: 0; }
+.resumen dt { font-weight: 700; color: var(--azul); }
+.resumen dd { margin: 0; word-break: break-word; }
+.resumen .btn { margin-top: .5rem; }
+
+/* ---------- Contacto ---------- */
+.contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .6rem;
+  text-align: center;
+  margin: 0 .75rem .75rem;
+  padding: .9rem;
+  background: var(--azul);
+  color: var(--blanco);
+  border-radius: var(--radio);
+}
+.contact h2 { font-size: 1.05rem; color: var(--amarillo); }
+.contact p { font-size: .85rem; opacity: .9; }
+
+/* ---------- Pie ---------- */
+.site-footer {
+  text-align: center;
+  padding: .7rem;
+  font-size: .75rem;
+  color: #5b6677;
+}
+
+/* ---------- Botón flotante de WhatsApp ---------- */
+.whatsapp-float {
+  position: fixed;
+  right: .8rem;
+  bottom: .8rem;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .65rem .9rem;
+  background: #25D366;
+  color: var(--blanco);
+  font-weight: 700;
+  font-size: .85rem;
+  text-decoration: none;
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .3);
+}
+.whatsapp-float:hover { background: #1ebe5b; }
+
+/* ==========================================================
+   Tablet (≥ 600px)
+   ========================================================== */
+@media (min-width: 600px) {
+  .btn-call-header span { display: inline; }
+  .btn-call-header::after { content: none; }
+  .btn-call-header { font-size: .9rem; }
+
+  .form-grid { grid-template-columns: 1fr 1fr; }
+  .field-full { grid-column: 1 / -1; }
+
+  .filters { grid-template-columns: repeat(4, 1fr); }
+  .contact { flex-direction: row; justify-content: space-between; text-align: left; }
+}
+
+/* ==========================================================
+   Escritorio (≥ 992px): menú horizontal y dos columnas
+   para que todo quede visible sin hacer scroll
+   ========================================================== */
+@media (min-width: 992px) {
+  .menu-toggle { display: none; }
+
+  .site-header { display: flex; align-items: center; }
+  .header-bar { flex: 1; }
+  .main-nav { max-height: none; overflow: visible; background: transparent; }
+  .main-nav ul { display: flex; }
+  .main-nav a { border-top: none; padding: 0 1rem; line-height: var(--alto-header); }
+
+  /* Orden: logo | llamar | menú  ->  el menú pasa al final */
+  .header-bar { padding-right: 0; }
+
+  .hero { padding: 1.1rem; }
+  .hero h1 { font-size: 1.6rem; }
+
+  .layout { grid-template-columns: 1.1fr 1fr; align-items: start; }
+  .cards { grid-template-columns: 1fr; }
+
+  .whatsapp-float span { display: inline; }
+}
+
+/* Respeta usuarios que prefieren menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
