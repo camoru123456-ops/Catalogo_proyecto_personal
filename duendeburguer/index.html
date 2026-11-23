@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Menú digital y pedidos en línea de DuendeBurguer II, comida rápida en La Paz, Bolivia.">
+  <title>DuendeBurguer II | Menú digital y pedidos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!--
+    Diseño de "una sola pantalla": la página no hace scroll.
+    El contenido se reparte en 3 vistas (Menú, Pedido, Finalizar)
+    que se cambian con la barra inferior.
+  -->
+  <div class="app">
+
+    <!-- ============ ENCABEZADO FIJO ============ -->
+    <header class="site-header" id="inicio">
+      <div class="header-top">
+        <a href="#" class="logo" data-view="menu" aria-label="DuendeBurguer II - Menú">
+          <span class="logo-icon" aria-hidden="true">🍔</span>
+          <span class="logo-info">
+            <span class="logo-text">Duende<span>Burguer</span> II</span>
+            <small class="schedule">🕔 Lun - Dom: 17:00 a 23:30</small>
+          </span>
+        </a>
+
+        <!-- Botón hamburguesa (se controla solo con classList.toggle) -->
+        <button class="hamburger" id="hamburger" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="main-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+      <nav class="main-nav" id="main-nav" aria-label="Navegación principal">
+        <ul class="nav-links">
+          <li><a href="#" data-view="menu">Menú</a></li>
+          <li><a href="#" data-view="cart">Mi pedido</a></li>
+          <li><a href="#" data-view="checkout">Finalizar</a></li>
+        </ul>
+        <div class="socials">
+          <a href="https://www.tiktok.com/@duendeburguer" target="_blank" rel="noopener noreferrer" class="social tiktok">TikTok</a>
+          <a href="https://wa.me/591XXXXXXXX" target="_blank" rel="noopener noreferrer" class="social whatsapp">WhatsApp</a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- ============ VISTAS ============ -->
+    <main class="app-main">
+
+      <!-- Vista 1: MENÚ (paginado, sin scroll) -->
+      <section class="view" id="view-menu" aria-label="Menú">
+        <div class="search-box">
+          <label for="search" class="visually-hidden">Buscar platillo o ingrediente</label>
+          <input type="search" id="search" placeholder="🔍 Buscá por nombre o ingrediente..." autocomplete="off">
+        </div>
+
+        <div class="filters" role="group" aria-label="Filtrar por categoría">
+          <button class="filter-btn active" data-filter="todos">Todos</button>
+          <button class="filter-btn" data-filter="hamburguesas">Hamburguesas</button>
+          <button class="filter-btn" data-filter="salchipapas">Salchipapas</button>
+          <button class="filter-btn" data-filter="lomitos">Lomitos</button>
+          <button class="filter-btn" data-filter="especiales">Especiales</button>
+        </div>
+
+        <div class="menu-grid" id="menu-grid" aria-live="polite"></div>
+        <p class="empty-msg" id="empty-msg" hidden>😕 No encontramos platillos con esa búsqueda.</p>
+
+        <div class="pager" id="pager" hidden>
+          <button type="button" class="pager-btn" id="prev-page" aria-label="Página anterior">‹</button>
+          <span id="page-label">1 / 1</span>
+          <button type="button" class="pager-btn" id="next-page" aria-label="Página siguiente">›</button>
+        </div>
+      </section>
+
+      <!-- Vista 2: MI PEDIDO -->
+      <section class="view" id="view-cart" aria-label="Mi pedido" hidden>
+        <h2 class="view-title">Mi Pedido</h2>
+
+        <div id="cart-items" class="cart-items"></div>
+
+        <div class="cart-footer">
+          <label for="order-note" class="visually-hidden">Notas generales del pedido</label>
+          <input type="text" id="order-note" placeholder="📝 Nota general (ej: sin mayonesa, con llajua)">
+
+          <div class="cart-totals">
+            <div class="row"><span>Subtotal</span><span id="subtotal">Bs. 0.00</span></div>
+            <div class="row total"><span>Total</span><span id="total">Bs. 0.00</span></div>
+          </div>
+
+          <div class="cart-actions">
+            <button class="btn btn-ghost" id="clear-cart" type="button">Vaciar</button>
+            <button class="btn btn-primary" id="go-checkout" type="button">Continuar →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Vista 3: FINALIZAR PEDIDO -->
+      <section class="view" id="view-checkout" aria-label="Finalizar pedido" hidden>
+        <div class="checkout-head">
+          <h2 class="view-title">Finalizar</h2>
+          <button type="button" class="summary-chip" id="summary-chip" data-view="cart">🛒 0 · Bs. 0.00</button>
+        </div>
+
+        <form id="checkout-form" class="checkout-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Nombre</label>
+              <input type="text" id="name" name="name" placeholder="Juan Pérez" autocomplete="name">
+              <small class="feedback" id="name-feedback" role="alert"></small>
+            </div>
+            <div class="form-group">
+              <label for="phone">Celular</label>
+              <input type="tel" id="phone" name="phone" placeholder="71234567" inputmode="numeric" maxlength="8" autocomplete="tel">
+              <small class="feedback" id="phone-feedback" role="alert"></small>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="delivery">Entrega</label>
+              <select id="delivery" name="delivery">
+                <option value="">Elegí...</option>
+                <option value="Recojo en local">🏪 Recojo en local</option>
+                <option value="Delivery">🛵 Delivery</option>
+              </select>
+              <small class="feedback" id="delivery-feedback" role="alert"></small>
+            </div>
+            <div class="form-group">
+              <label for="payment">Pago</label>
+              <select id="payment" name="payment">
+                <option value="">Elegí...</option>
+                <option value="Efectivo">💵 Efectivo</option>
+                <option value="Transferencia QR">📱 Transferencia QR</option>
+              </select>
+              <small class="feedback" id="payment-feedback" role="alert"></small>
+            </div>
+          </div>
+
+          <div class="form-group" id="address-group" hidden>
+            <label for="address">Dirección exacta</label>
+            <input type="text" id="address" name="address" placeholder="Calle, número, zona y referencia" autocomplete="street-address">
+            <small class="feedback" id="address-feedback" role="alert"></small>
+          </div>
+
+          <div class="form-alert" id="form-alert" role="alert" hidden></div>
+
+          <button type="submit" class="btn btn-whatsapp">Enviar pedido por WhatsApp</button>
+        </form>
+      </section>
+    </main>
+
+    <!-- ============ BARRA INFERIOR (cambia de vista) ============ -->
+    <nav class="tabbar" aria-label="Secciones">
+      <button class="tab active" data-view="menu" type="button"><span class="tab-ico">📖</span><span>Menú</span></button>
+      <button class="tab" data-view="cart" type="button"><span class="tab-ico">🛒<b class="badge" id="cart-count">0</b></span><span>Pedido</span></button>
+      <button class="tab" data-view="checkout" type="button"><span class="tab-ico">✅</span><span>Finalizar</span></button>
+    </nav>
+
+    <!-- Aviso breve al agregar un platillo -->
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
