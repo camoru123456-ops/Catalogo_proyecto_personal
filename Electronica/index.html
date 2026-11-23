@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Electrónica GONZALES: servicio técnico y reparación de celulares, laptops, TV, electrodomésticos y microsoldadura en La Paz, Bolivia.">
+  <title>Electrónica GONZALES | Servicio Técnico en La Paz</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ===================== ENCABEZADO FIJO ===================== -->
+  <header class="site-header" id="inicio">
+    <div class="header-inner">
+      <a href="#" class="logo" data-view="inicio" aria-label="Electrónica GONZALES - Inicio">
+        <span class="logo-icon" aria-hidden="true">⚡</span>
+        <span class="logo-text">Electrónica <strong>GONZALES</strong></span>
+      </a>
+
+      <p class="horario-header">🕘 Lun - Sáb: 09:00 a 19:30</p>
+
+      <!-- Botón hamburguesa (se controla solo con classList.toggle) -->
+      <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="nav" id="nav-menu" aria-label="Navegación principal">
+        <ul>
+          <li><a href="#" data-view="inicio">Inicio</a></li>
+          <li><a href="#" data-view="servicios">Servicios</a></li>
+          <li><a href="#" data-view="solicitud">🧰 Mi solicitud (<span id="fab-count">0</span>)</a></li>
+          <li><a href="#" data-view="ubicacion">Ubicación</a></li>
+          <li>
+            <a href="https://www.tiktok.com/@electronicagonzales" target="_blank" rel="noopener noreferrer" class="nav-tiktok">
+              🎵 TikTok
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===================== VISTA: INICIO ===================== -->
+    <section class="view view-hero active" id="view-inicio" data-name="inicio">
+      <div class="hero-content">
+        <p class="hero-tag">Servicio técnico especializado · La Paz, Bolivia</p>
+        <h1>Reparamos tu equipo,<br><span>sin vueltas.</span></h1>
+        <p class="hero-text">
+          Celulares, laptops, televisores, electrodomésticos y electrónica general.
+          Elige el servicio, completa tu solicitud y te contactamos por WhatsApp.
+        </p>
+        <div class="hero-actions">
+          <a href="#" class="btn btn-primary" data-view="servicios">Ver servicios</a>
+          <a href="#" class="btn btn-outline" data-view="solicitud">Solicitar diagnóstico</a>
+        </div>
+        <p class="hero-foot">© <span id="anio"></span> Reparaciones Electrónicas GONZALES · La Paz, Bolivia</p>
+      </div>
+    </section>
+
+    <!-- ===================== VISTA: SERVICIOS ===================== -->
+    <section class="view" id="view-servicios" data-name="servicios">
+      <div class="container view-col">
+        <div class="view-head">
+          <h2 class="section-title">Servicios técnicos</h2>
+          <p class="result-count" id="contador" aria-live="polite"></p>
+        </div>
+
+        <!-- Buscador en tiempo real -->
+        <div class="search-box">
+          <label for="buscador" class="sr-only">Buscar servicio o falla</label>
+          <input type="search" id="buscador" placeholder='🔍 Buscar falla o servicio (ej. "pantalla")' autocomplete="off">
+        </div>
+
+        <!-- Botones de filtro (usan data-category) -->
+        <div class="filters" id="filtros" role="group" aria-label="Filtrar por tipo de dispositivo">
+          <button class="filter-btn active" data-category="todos">Todos los Servicios</button>
+          <button class="filter-btn" data-category="celulares">Celulares y Tablets</button>
+          <button class="filter-btn" data-category="computadoras">Laptops y PC</button>
+          <button class="filter-btn" data-category="tv-audio">Televisores/Audio</button>
+          <button class="filter-btn" data-category="electrodomesticos">Electrodomésticos</button>
+          <button class="filter-btn" data-category="general">Electrónica General</button>
+        </div>
+
+        <!-- Tarjetas (se renderizan desde script.js, paginadas) -->
+        <div class="services-grid" id="servicios-grid"></div>
+
+        <!-- Paginación -->
+        <div class="pager">
+          <button type="button" class="pager-btn" id="pager-prev" aria-label="Página anterior">◀</button>
+          <span id="pager-info" aria-live="polite">1 / 1</span>
+          <button type="button" class="pager-btn" id="pager-next" aria-label="Página siguiente">▶</button>
+          <a href="#" class="pager-lista" data-view="solicitud">Ver mi lista →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== VISTA: MI SOLICITUD (3 PASOS) ===================== -->
+    <section class="view view-alt" id="view-solicitud" data-name="solicitud">
+      <div class="container view-col">
+        <div class="panel wizard">
+          <div class="wizard-head">
+            <h2 class="section-title small">📋 Mi solicitud de diagnóstico</h2>
+            <p class="paso-indicador" id="paso-indicador">Paso 1 de 3</p>
+          </div>
+          <div class="progress" aria-hidden="true"><span class="on"></span><span></span><span></span></div>
+
+          <!-- PASO 1: lista de revisión (carrito) -->
+          <div class="step active" data-step="0">
+            <p class="section-sub">Servicios que agregaste. Puedes quitarlos o añadir observaciones por equipo.</p>
+            <div id="lista-diagnostico" class="cart-list" aria-live="polite"></div>
+            <div class="step-actions">
+              <a href="#" class="btn btn-outline-dark" data-view="servicios">+ Agregar servicios</a>
+              <button type="button" class="btn btn-primary" data-next>Siguiente ▶</button>
+            </div>
+          </div>
+
+          <!-- PASOS 2 y 3: formulario -->
+          <form id="form-diagnostico" novalidate hidden>
+
+            <!-- PASO 2: contacto -->
+            <div class="step" data-step="1">
+              <p class="section-sub">¿Cómo te contactamos?</p>
+              <div class="field">
+                <label for="nombre">Nombre del cliente *</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez" autocomplete="name">
+                <small class="msg" id="msg-nombre"></small>
+              </div>
+              <div class="field">
+                <label for="telefono">Celular de contacto *</label>
+                <input type="tel" id="telefono" name="telefono" placeholder="Ej. 71234567" inputmode="numeric" autocomplete="tel">
+                <small class="msg" id="msg-telefono"></small>
+              </div>
+              <div class="step-actions">
+                <button type="button" class="btn btn-outline-dark" data-prev>◀ Atrás</button>
+                <button type="button" class="btn btn-primary" data-next>Siguiente ▶</button>
+              </div>
+            </div>
+
+            <!-- PASO 3: equipo y falla -->
+            <div class="step" data-step="2">
+              <p class="section-sub">Cuéntanos sobre tu equipo.</p>
+              <div class="row-2">
+                <div class="field">
+                  <label for="dispositivo">Tipo de dispositivo *</label>
+                  <select id="dispositivo" name="dispositivo">
+                    <option value="">-- Selecciona --</option>
+                    <option value="Celular / Tablet">Celular / Tablet</option>
+                    <option value="Laptop / PC">Laptop / PC</option>
+                    <option value="Televisor / Equipo de audio">Televisor / Equipo de audio</option>
+                    <option value="Electrodoméstico">Electrodoméstico</option>
+                    <option value="Electrónica general">Electrónica general</option>
+                  </select>
+                  <small class="msg" id="msg-dispositivo"></small>
+                </div>
+                <div class="field">
+                  <label for="modelo">Marca y modelo *</label>
+                  <input type="text" id="modelo" name="modelo" placeholder='Ej. Samsung A54, TV LG 43"'>
+                  <small class="msg" id="msg-modelo"></small>
+                </div>
+              </div>
+              <div class="field">
+                <label for="falla">Descripción de la falla *</label>
+                <textarea id="falla" name="falla" rows="3" placeholder='Ej. "No enciende después de una caída", "carga lento"...'></textarea>
+                <small class="msg" id="msg-falla"></small>
+              </div>
+              <div class="step-actions">
+                <button type="button" class="btn btn-outline-dark" data-prev>◀ Atrás</button>
+                <button type="submit" class="btn btn-whatsapp">💬 Enviar por WhatsApp</button>
+              </div>
+            </div>
+
+            <div class="alert" id="alerta-form" role="alert" hidden></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== VISTA: UBICACIÓN ===================== -->
+    <section class="view" id="view-ubicacion" data-name="ubicacion">
+      <div class="container view-col view-center">
+        <h2 class="section-title">Ubicación del taller</h2>
+        <div class="location-card">
+          <div class="location-info">
+            <h3>📍 Reparaciones Electrónicas GONZALES</h3>
+            <!-- Dirección referencial: editar a gusto -->
+            <p id="direccion-taller">Av. Referencial #123, entre calles Ejemplo y Muestra, Zona Central, La Paz, Bolivia.</p>
+            <p>🕘 Lunes a Sábado: 09:00 a 19:30</p>
+            <p class="small-note">* Dirección referencial. Confirma la ubicación exacta por WhatsApp.</p>
+          </div>
+          <div class="location-actions">
+            <a href="#" id="btn-contacto" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer">💬 Contacto rápido</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=La+Paz+Bolivia+reparaci%C3%B3n+electr%C3%B3nica" target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark">🗺️ Ver en mapa</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
