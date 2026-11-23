@@ -6,7 +6,7 @@
 /* ---------------------------------------------------------
    0. CONFIGURACIÓN
    --------------------------------------------------------- */
-// Reemplazá XXXXXXXX por el número real del negocio (8 dígitos, sin espacios).
+// Reemplazá XXXXXXXX por el número real del negocio (8 dígitos, sin espacios pendiente a la espera de la cracion) .
 const WHATSAPP_NUMBER = "591XXXXXXXX";
 const CURRENCY = "Bs.";
 
@@ -18,7 +18,7 @@ const FALLBACK_IMG =
   );
 
 /* ---------------------------------------------------------
-   1. CATÁLOGO DE PRODUCTOS
+   1. CATÁLOGO DE PRODUCTOS (Nota imagenes de stock usadas por pedido del cliente)
    --------------------------------------------------------- */
 const products = [
   {
