@@ -1,0 +1,298 @@
+/* =========================================================
+   Fisioterapia y Kinesiología LUIGI — styles.css
+   Mobile-First · Zero-Scroll en escritorio · Alto contraste
+   ========================================================= */
+
+/* ---------- 1. Variables y reset ---------- */
+:root {
+  --blue: #0F4C81;          /* azul clínico */
+  --blue-dark: #0A3A64;
+  --teal: #0D9488;          /* turquesa (decoración y bordes) */
+  --teal-dark: #0A6F66;     /* turquesa oscuro: texto con contraste AA */
+  --ink: #13232F;           /* texto oscuro */
+  --muted: #475A68;
+  --line: #D3E0E9;
+  --soft: #F1F7FA;
+  --white: #FFFFFF;
+  --red: #B42318;
+  --red-bg: #FEF3F2;
+  --green: #067647;
+  --green-bg: #ECFDF3;
+  --radius: 12px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { height: 100%; margin: 0; }
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--ink);
+  background: var(--white);
+  line-height: 1.4;
+  overflow: hidden; /* Zero-scroll: el body nunca se desplaza */
+}
+
+h1, h2, h3, p { margin: 0; }
+
+button, input, select, textarea { font: inherit; color: inherit; }
+
+:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+.skip-link {
+  position: absolute; left: .5rem; top: -3rem; z-index: 100;
+  background: var(--blue); color: #fff; padding: .5rem .8rem; border-radius: 8px;
+}
+.skip-link:focus { top: .5rem; }
+
+/* ---------- 2. Estructura general (100vh / 100dvh) ---------- */
+.app {
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.layout { flex: 1; min-height: 0; }
+
+/* Vistas: en móvil solo una activa (display none / flex) */
+.vista { display: none; flex-direction: column; height: 100%; min-height: 0; }
+.vista.is-active { display: flex; }
+
+/* ---------- 3. Encabezado y menú hamburguesa ---------- */
+.header {
+  position: relative; z-index: 20;
+  display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+  padding: .55rem 1rem;
+  background: var(--white);
+  border-bottom: 3px solid var(--teal);
+}
+
+.brand { display: flex; align-items: center; gap: .65rem; min-width: 0; }
+.brand-logo { flex: none; }
+.brand-text h1 { font-size: 1rem; line-height: 1.15; color: var(--blue); }
+.brand-text p { font-size: .75rem; color: var(--muted); }
+
+.menu-toggle {
+  flex: none; width: 44px; height: 44px;
+  display: inline-grid; place-content: center; gap: 5px;
+  background: var(--white); border: 1px solid var(--line); border-radius: 10px; cursor: pointer;
+}
+.bar { display: block; width: 22px; height: 2px; background: var(--blue); border-radius: 2px; transition: transform .2s, opacity .2s; }
+.menu-toggle[aria-expanded="true"] .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.menu-toggle[aria-expanded="true"] .bar:nth-child(2) { opacity: 0; }
+.menu-toggle[aria-expanded="true"] .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Menú desplegable en móvil (se abre con classList.toggle('is-open')) */
+.menu {
+  display: none;
+  position: absolute; top: 100%; left: 0; right: 0;
+  flex-direction: column; gap: .5rem;
+  padding: .75rem 1rem 1rem;
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 14px 24px rgba(15, 76, 129, .16);
+}
+.menu.is-open { display: flex; }
+
+.menu-link {
+  text-align: left; padding: .65rem .8rem; border: 1px solid var(--line);
+  border-radius: 10px; background: var(--soft); color: var(--blue); font-weight: 600; cursor: pointer;
+}
+
+.info-chip {
+  display: flex; align-items: center; gap: .4rem;
+  font-size: .85rem; color: var(--ink);
+}
+
+/* ---------- 4. Botones ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .4rem;
+  padding: .55rem .9rem; border: 0; border-radius: 10px;
+  font-weight: 700; font-size: .9rem; text-decoration: none; cursor: pointer;
+  transition: background .15s, transform .1s;
+}
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--blue); color: #fff; }
+.btn-primary:hover { background: var(--blue-dark); }
+.btn-wa { background: var(--teal-dark); color: #fff; }
+.btn-wa:hover { background: #085a53; }
+.btn-block { width: 100%; padding: .7rem; }
+
+/* ---------- 5. Pestañas (solo móvil) ---------- */
+.tabs { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--line); background: var(--white); }
+.tab {
+  padding: .7rem .5rem; background: none; border: 0; border-bottom: 3px solid transparent;
+  font-weight: 700; color: var(--muted); cursor: pointer;
+}
+.tab[aria-selected="true"] { color: var(--blue); border-bottom-color: var(--teal); }
+
+/* ---------- 6. Catálogo ---------- */
+#vista-catalogo { padding: .75rem .75rem 0; }
+
+.toolbar { display: flex; flex-direction: column; gap: .5rem; padding-bottom: .5rem; }
+
+.search input {
+  width: 100%; padding: .6rem .8rem; border: 2px solid var(--line); border-radius: 10px; background: var(--white);
+}
+.search input:focus { border-color: var(--teal); outline: none; box-shadow: 0 0 0 3px rgba(13, 148, 136, .25); }
+
+.chips { display: flex; gap: .4rem; overflow-x: auto; padding-bottom: 2px; scrollbar-width: thin; }
+.chip {
+  flex: none; padding: .4rem .8rem; border-radius: 999px;
+  border: 1.5px solid var(--blue); background: var(--white); color: var(--blue);
+  font-size: .85rem; font-weight: 600; cursor: pointer; white-space: nowrap;
+}
+.chip:hover { background: var(--soft); }
+.chip.is-active { background: var(--blue); color: #fff; }
+
+.count { font-size: .78rem; color: var(--muted); }
+
+/* Lista de tarjetas: único contenedor con desbordamiento interno */
+.cards {
+  flex: 1; min-height: 0; overflow-y: auto;
+  display: grid; grid-template-columns: 1fr; gap: .7rem;
+  align-content: start; padding: .15rem .15rem 1rem;
+  scrollbar-width: thin;
+}
+
+.card {
+  display: flex; flex-direction: column; gap: .4rem;
+  padding: .8rem; background: var(--white);
+  border: 1.5px solid var(--line); border-radius: var(--radius);
+  box-shadow: 0 1px 2px rgba(15, 76, 129, .06);
+  transition: border-color .15s, box-shadow .15s;
+}
+.card:hover { border-color: var(--teal); box-shadow: 0 6px 16px rgba(15, 76, 129, .1); }
+.card.is-selected { border-color: var(--blue); background: var(--soft); box-shadow: 0 0 0 2px var(--blue); }
+
+.card-head { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.card-icon {
+  width: 38px; height: 38px; display: grid; place-items: center;
+  font-size: 1.3rem; background: var(--soft); border-radius: 10px;
+}
+.badge {
+  font-size: .7rem; font-weight: 700; color: var(--teal-dark);
+  background: #E3F6F3; padding: .2rem .5rem; border-radius: 999px;
+}
+.card h3 { font-size: 1rem; line-height: 1.2; color: var(--blue); }
+.card-desc {
+  font-size: .85rem; color: var(--muted); flex: 1;
+  display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.card-meta { display: flex; align-items: center; justify-content: space-between; font-size: .85rem; }
+.card-meta strong { color: var(--blue); font-size: 1rem; }
+
+.vacio {
+  grid-column: 1 / -1; text-align: center; padding: 2rem 1rem;
+  color: var(--muted); background: var(--soft); border-radius: var(--radius);
+}
+
+/* ---------- 7. Panel de reserva ---------- */
+.panel {
+  padding: .9rem; background: var(--soft);
+  overflow-y: auto; scrollbar-width: thin; gap: .55rem;
+}
+.panel h2 { font-size: 1.1rem; color: var(--blue); }
+
+.resumen {
+  display: flex; align-items: center; gap: .7rem;
+  padding: .6rem .7rem; background: var(--white);
+  border: 1.5px dashed var(--teal); border-radius: 10px;
+}
+.resumen-icono {
+  flex: none; width: 40px; height: 40px; display: grid; place-items: center;
+  font-size: 1.4rem; background: #E3F6F3; border-radius: 10px;
+}
+.resumen-etiqueta { font-size: .7rem; text-transform: uppercase; letter-spacing: .04em; color: var(--teal-dark); font-weight: 700; }
+.resumen-titulo { font-weight: 700; font-size: .95rem; line-height: 1.2; color: var(--blue); }
+.resumen-meta { font-size: .8rem; color: var(--muted); }
+.resumen-meta strong { color: var(--ink); }
+.resumen-vacio { font-size: .85rem; color: var(--muted); }
+
+form { display: flex; flex-direction: column; gap: .4rem; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+
+.field { display: flex; flex-direction: column; gap: .15rem; min-width: 0; }
+.field label { font-size: .78rem; font-weight: 700; color: var(--ink); }
+.field input, .field select, .field textarea {
+  width: 100%; padding: .45rem .6rem; background: var(--white);
+  border: 2px solid var(--line); border-radius: 8px; font-size: .9rem;
+}
+.field textarea { resize: none; }
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(13, 148, 136, .25);
+}
+
+.msg { font-size: .72rem; min-height: .95rem; line-height: .95rem; font-weight: 600; }
+
+/* Estados de validación: rojo = error · verde = dato válido */
+.field.is-invalid input, .field.is-invalid select, .field.is-invalid textarea { border-color: var(--red); background: var(--red-bg); }
+.field.is-invalid .msg { color: var(--red); }
+.field.is-valid input, .field.is-valid select, .field.is-valid textarea { border-color: var(--green); background: var(--green-bg); }
+.field.is-valid .msg { color: var(--green); }
+
+.status { font-size: .82rem; font-weight: 600; border-radius: 8px; }
+.status:not(:empty) { padding: .5rem .65rem; }
+.status.is-error { color: var(--red); background: var(--red-bg); border: 1px solid var(--red); }
+.status.is-ok { color: var(--green); background: var(--green-bg); border: 1px solid var(--green); }
+.status a { color: inherit; font-weight: 800; }
+
+/* ---------- 8. Móvil ancho (≥ 560px): 2 columnas de tarjetas ---------- */
+@media (min-width: 560px) {
+  .cards { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ---------- 9. Escritorio (≥ 900px): tablero single-screen ---------- */
+@media (min-width: 900px) {
+  .header { padding: .6rem 1.25rem; }
+  .brand-text h1 { font-size: 1.15rem; }
+
+  /* El menú pasa a ser una barra de información en línea */
+  .menu-toggle, .menu-link, .tabs { display: none; }
+  .menu {
+    display: flex; position: static; flex-direction: row; align-items: center; gap: 1.1rem;
+    padding: 0; border: 0; box-shadow: none; background: none;
+  }
+
+  .layout {
+    display: grid; grid-template-columns: minmax(0, 1fr) 400px;
+    gap: 1rem; padding: 1rem 1.25rem;
+  }
+  /* Ambas vistas visibles a la vez */
+  .vista, .vista.is-active { display: flex; }
+  #vista-catalogo { padding: 0; }
+
+  .cards { grid-template-columns: repeat(3, 1fr); }
+
+  .panel {
+    border: 1px solid var(--line); border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(15, 76, 129, .08);
+  }
+}
+
+/* Pantallas de escritorio bajas: compactar para mantener zero-scroll */
+@media (min-width: 900px) and (max-height: 760px) {
+  .header { padding-top: .4rem; padding-bottom: .4rem; }
+  .layout { padding: .6rem 1.25rem; gap: .75rem; }
+  .card { padding: .6rem .7rem; gap: .3rem; }
+  .card-desc { -webkit-line-clamp: 2; line-clamp: 2; font-size: .8rem; }
+  .card-icon { width: 32px; height: 32px; font-size: 1.1rem; }
+  .panel { padding: .7rem; gap: .4rem; }
+  .field input, .field select, .field textarea { padding: .35rem .55rem; }
+  .msg { min-height: .85rem; line-height: .85rem; }
+}
+
+@media (min-width: 1200px) {
+  .layout { grid-template-columns: minmax(0, 1fr) 430px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

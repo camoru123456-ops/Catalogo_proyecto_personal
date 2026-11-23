@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fisioterapia y Kinesiología LUIGI | Tratamientos y citas en La Paz</title>
+  <meta name="description" content="Tratamientos de fisioterapia y kinesiología en La Paz, Bolivia. Elige tu terapia y solicita tu cita directamente por WhatsApp.">
+  <meta name="theme-color" content="#0F4C81">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#vista-catalogo">Saltar al contenido</a>
+
+  <div class="app">
+
+    <!-- ============ ENCABEZADO + MENÚ HAMBURGUESA ============ -->
+    <header class="header">
+      <div class="brand">
+        <svg class="brand-logo" viewBox="0 0 48 48" width="40" height="40" aria-hidden="true" focusable="false">
+          <rect width="48" height="48" rx="12" fill="#0F4C81"/>
+          <path d="M6 26h9l4-9 6 17 5-12 3 4h9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="38" cy="12" r="3.5" fill="#0D9488"/>
+        </svg>
+        <div class="brand-text">
+          <h1>Fisioterapia y Kinesiología LUIGI</h1>
+          <p>Tratamientos y citas directas</p>
+        </div>
+      </div>
+
+      <button class="menu-toggle" id="menuToggle" type="button"
+              aria-expanded="false" aria-controls="menu" aria-label="Abrir menú">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
+
+      <nav class="menu" id="menu" aria-label="Navegación e información">
+        <!-- Enlaces de vista: solo visibles en móvil -->
+        <button type="button" class="menu-link" data-vista="catalogo">Tratamientos</button>
+        <button type="button" class="menu-link" data-vista="reserva">Agendar cita</button>
+
+        <p class="info-chip"><span aria-hidden="true">🕒</span> Lun - Sáb: 08:30 a 19:30</p>
+        <!-- Ajusta aquí la dirección exacta del consultorio -->
+        <p class="info-chip"><span aria-hidden="true">📍</span> Consultorio en La Paz, Bolivia</p>
+        <a class="btn btn-wa" id="enlaceWhatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a>
+      </nav>
+    </header>
+
+    <!-- ============ PESTAÑAS (solo móvil) ============ -->
+    <div class="tabs" role="tablist" aria-label="Secciones del portal">
+      <button type="button" class="tab is-active" role="tab" id="tab-catalogo"
+              aria-controls="vista-catalogo" aria-selected="true" tabindex="0" data-vista="catalogo">Tratamientos</button>
+      <button type="button" class="tab" role="tab" id="tab-reserva"
+              aria-controls="vista-reserva" aria-selected="false" tabindex="-1" data-vista="reserva">Agendar cita</button>
+    </div>
+
+    <main class="layout">
+
+      <!-- ============ CATÁLOGO ============ -->
+      <section class="vista is-active" id="vista-catalogo" role="tabpanel" aria-labelledby="tab-catalogo">
+        <div class="toolbar">
+          <div class="search">
+            <label class="sr-only" for="buscador">Buscar síntoma o tratamiento</label>
+            <input type="search" id="buscador" placeholder="Busca un síntoma o terapia: espalda, masaje, deportiva…" autocomplete="off">
+          </div>
+          <div class="chips" role="toolbar" aria-label="Filtrar por especialidad">
+            <button type="button" class="chip is-active" data-filter="todas" aria-pressed="true">Todas</button>
+            <button type="button" class="chip" data-filter="rehabilitacion" aria-pressed="false">Rehabilitación</button>
+            <button type="button" class="chip" data-filter="deportiva" aria-pressed="false">Deportiva</button>
+            <button type="button" class="chip" data-filter="dolor" aria-pressed="false">Dolor Muscular/Articular</button>
+            <button type="button" class="chip" data-filter="neurologica" aria-pressed="false">Neurológica</button>
+          </div>
+          <p class="count" id="contador" aria-live="polite"></p>
+        </div>
+
+        <!-- Las tarjetas se generan desde script.js -->
+        <div class="cards" id="listaTratamientos"></div>
+      </section>
+
+      <!-- ============ PANEL DE RESERVA ============ -->
+      <section class="vista panel" id="vista-reserva" role="tabpanel" aria-labelledby="tab-reserva">
+        <h2>Solicita tu cita</h2>
+
+        <!-- Resumen dinámico (innerHTML desde script.js) -->
+        <div class="resumen" id="resumen" aria-live="polite"></div>
+
+        <form id="formCita" novalidate>
+          <div class="row">
+            <div class="field" data-field="nombre">
+              <label for="nombre">Nombre del paciente</label>
+              <input type="text" id="nombre" name="nombre" autocomplete="name" maxlength="60" aria-describedby="msg-nombre" required>
+              <p class="msg" id="msg-nombre"></p>
+            </div>
+            <div class="field" data-field="celular">
+              <label for="celular">Número de celular</label>
+              <input type="tel" id="celular" name="celular" inputmode="numeric" autocomplete="tel" placeholder="7XXXXXXX" maxlength="16" aria-describedby="msg-celular" required>
+              <p class="msg" id="msg-celular"></p>
+            </div>
+          </div>
+
+          <div class="field" data-field="tratamiento">
+            <label for="tratamiento">Tratamiento requerido</label>
+            <select id="tratamiento" name="tratamiento" aria-describedby="msg-tratamiento" required></select>
+            <p class="msg" id="msg-tratamiento"></p>
+          </div>
+
+          <div class="row">
+            <div class="field" data-field="turno">
+              <label for="turno">Turno preferido</label>
+              <select id="turno" name="turno" aria-describedby="msg-turno" required>
+                <option value="">Selecciona…</option>
+                <option value="Mañana (08:30 - 13:00)">Mañana</option>
+                <option value="Tarde (13:00 - 19:30)">Tarde</option>
+              </select>
+              <p class="msg" id="msg-turno"></p>
+            </div>
+            <div class="field" data-field="fecha">
+              <label for="fecha">Fecha preferida</label>
+              <input type="date" id="fecha" name="fecha" aria-describedby="msg-fecha" required>
+              <p class="msg" id="msg-fecha"></p>
+            </div>
+          </div>
+
+          <div class="field" data-field="motivo">
+            <label for="motivo">Motivo de consulta o molestia</label>
+            <textarea id="motivo" name="motivo" rows="2" maxlength="300" placeholder="Ej.: dolor lumbar desde hace 2 semanas" aria-describedby="msg-motivo" required></textarea>
+            <p class="msg" id="msg-motivo"></p>
+          </div>
+
+          <p class="status" id="estadoForm" role="status" aria-live="polite"></p>
+          <button type="submit" class="btn btn-primary btn-block">Confirmar cita por WhatsApp</button>
+        </form>
+      </section>
+
+    </main>
+  </div>
+</body>
+</html>
